@@ -1,58 +1,66 @@
 ﻿namespace Bookshelf.Domain;
 
 /// <summary>
-/// Модель книги
+/// Модель книги.
 /// </summary>
 public class Book
 {
     /// <summary>
-    /// Уникальный идентификатор книги
+    /// Идентификатор книги.
     /// </summary>
     public Guid Id { get; set; }
-
     /// <summary>
-    /// Название книги
+    /// Название книги.
     /// </summary>
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     /// <summary>
-    /// Описание книги
+    /// Описание книги.
     /// </summary>
-    public string Description { get; set; }
+    public string Description { get; set; } = string.Empty;
 
     /// <summary>
-    /// URL изображения книги
+    /// Возрастное ограничение книги.
     /// </summary>
-    public string ImageUrl { get; set; }
+    public int AgeRestriction { get; set; }
 
     /// <summary>
-    /// Автор книги
+    /// Дата публикации книги.
     /// </summary>
-    public string Author { get; set; }
+    public DateTime DatePublished { get; set; }
 
     /// <summary>
-    /// Издательство книги
+    /// Количество страниц в книге.
     /// </summary>
-    public string Publisher { get; set; }
+    public int Pages { get; set; }
 
     /// <summary>
-    /// Дата выхода книги
-    /// </summary>
-    public DateTime ReleaseDate { get; set; }
-
-    /// <summary>
-    /// Цена книги
+    /// Цена книги.
     /// </summary>
     public decimal Price { get; set; }
 
     /// <summary>
-    /// Список жанров, к которым относится книга
+    /// Идентификатор ISBN книги.
+    /// </summary>
+    public string ISBN { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Идентификатор автора книги.
+    /// </summary>
+    public Guid AuthorId { get; set; }
+
+    /// <summary>
+    /// Автор книги.
+    /// </summary>
+    public Author Author { get; set; }
+
+    /// <summary>
+    /// Коллекция жанров, к которым относится книга.
     /// </summary>
     public ICollection<Genre> Genres { get; set; }
 
     /// <summary>
-    /// Список отзывов на книгу
+    /// Коллекция отзывов на книгу.
     /// </summary>
     public ICollection<Review> Reviews { get; set; }
 }
-

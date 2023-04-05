@@ -8,8 +8,16 @@ internal class GenreConfiguration : IEntityTypeConfiguration<Genre>
 {
     public void Configure(EntityTypeBuilder<Genre> builder)
     {
-        builder.HasKey(genre => genre.Id);
-        builder.HasIndex(genre => genre.Id).IsUnique();
-        builder.Property(genre => genre.Name).HasMaxLength(50);
+        builder.HasKey(g => g.Id);
+
+        builder.HasIndex(g => g.Name)
+            .IsUnique();
+
+        builder.Property(g => g.Name)
+            .IsRequired()
+            .HasMaxLength(50);
+
+        builder.HasMany(g => g.Books)
+            .WithMany(b => b.Genres);
     }
 }

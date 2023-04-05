@@ -13,7 +13,7 @@ public class Genre
     /// <summary>
     /// Название жанра.
     /// </summary>
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// Список книг данного жанра.

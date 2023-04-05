@@ -14,36 +14,38 @@ internal class BookConfiguration : IEntityTypeConfiguration<Book>
             .IsUnique();
 
         builder.Property(book => book.Title)
-            .HasMaxLength(250)
+            .HasMaxLength(100)
             .IsRequired();
 
         builder.Property(book => book.Description)
-            .HasMaxLength(1000);
-
-        builder.Property(book => book.ImageUrl)
-            .HasMaxLength(500);
-
-        builder.Property(book => book.Author)
-            .HasMaxLength(250)
+            .HasMaxLength(500)
             .IsRequired();
 
-        builder.Property(book => book.Publisher)
-            .HasMaxLength(250)
+        builder.Property(book => book.AgeRestriction)
             .IsRequired();
 
-        builder.Property(book => book.ReleaseDate)
+        builder.Property(book => book.DatePublished)
+            .IsRequired();
+
+        builder.Property(book => book.Pages)
             .IsRequired();
 
         builder.Property(book => book.Price)
-            .HasColumnType("decimal(18,2)")
+           .HasColumnType("decimal(18,2)")
+           .IsRequired();
+
+        builder.Property(book => book.ISBN)
+            .HasMaxLength(20)
             .IsRequired();
+
+        builder.HasOne(book => book.Author)
+            .WithMany(author => author.Books);
 
         builder.HasMany(book => book.Genres)
             .WithMany(genre => genre.Books);
 
         builder.HasMany(book => book.Reviews)
             .WithOne(review => review.Book)
-            .HasForeignKey(book => book.BookId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .HasForeignKey(r => r.BookId);
     }
 }

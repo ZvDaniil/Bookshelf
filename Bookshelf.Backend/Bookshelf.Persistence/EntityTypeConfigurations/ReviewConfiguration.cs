@@ -10,24 +10,20 @@ internal class ReviewConfiguration : IEntityTypeConfiguration<Review>
     {
         builder.HasKey(review => review.Id);
 
-        builder.HasIndex(review => review.Id)
+        builder
+            .HasIndex(review => review.Id)
             .IsUnique();
 
-        builder.Property(review => review.Title)
-            .HasMaxLength(100);
-
-        builder.Property(review => review.Body)
-            .HasMaxLength(500);
-
-        builder.Property(review => review.Rating)
-            .IsRequired();
-
-        builder.Property(review => review.Date)
-            .IsRequired();
-
-        builder.HasOne(review => review.Book)
+        builder
+            .HasOne(review => review.Book)
             .WithMany(book => book.Reviews)
             .HasForeignKey(review => review.BookId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder
+            .HasOne(review => review.User)
+            .WithMany(user => user.Reviews)
+            .HasForeignKey(review => review.UserId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }
