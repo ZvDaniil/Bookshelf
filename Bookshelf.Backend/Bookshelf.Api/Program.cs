@@ -8,8 +8,19 @@ using Bookshelf.Persistence;
 using Bookshelf.Persistence.Configurations;
 
 using Bookshelf.Api.Middleware;
+using Bookshelf.Api.Services;
+using Serilog;
+using Serilog.Events;
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .WriteTo.Console()
+    .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog();
+
 ConfigureServices(builder.Services, builder.Configuration);
 
 var app = builder.Build();
@@ -23,7 +34,7 @@ try
 }
 catch (Exception exception)
 {
-    Console.WriteLine(exception.Message);
+    Log.Fatal(exception, "An error occured while app initialization");
 }
 
 app.UseSwagger();
@@ -53,6 +64,9 @@ static void ConfigureServices(IServiceCollection services, IConfiguration config
 
     services.AddEndpointsApiExplorer();
     services.AddSwaggerGen();
+
+    services.AddHttpContextAccessor();
+    services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
     services.AddControllers();
 

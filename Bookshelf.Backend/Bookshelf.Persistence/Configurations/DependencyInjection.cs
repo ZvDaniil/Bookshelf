@@ -11,7 +11,7 @@ public static class DependencyInjection
     {
         services.AddDbContext<BookshelfDbContext>(options =>
         {
-            options.UseSqlite(configuration.GetConnectionString("DbConnection"));
+            options.UseSqlite(configuration.GetConnectionString("Sqlite"));
         });
 
         services.AddScoped<IBookshelfDbContext>(provider => provider.GetRequiredService<BookshelfDbContext>());
