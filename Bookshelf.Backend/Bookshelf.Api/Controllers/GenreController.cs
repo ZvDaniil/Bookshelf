@@ -1,7 +1,13 @@
 ﻿using AutoMapper;
+
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+
+using Bookshelf.Domain.Base;
+
 using Bookshelf.Api.Models;
 using Bookshelf.Api.Controllers.Base;
+
 using Bookshelf.Application.Genres.Models;
 using Bookshelf.Application.Genres.Queries.GetGenreList;
 using Bookshelf.Application.Genres.Queries.GetGenreDetails;
@@ -20,6 +26,7 @@ public class GenreController : BaseController
     public GenreController(IMapper mapper) => _mapper = mapper;
 
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<GenreListVm>> GetAll()
     {
         var query = new GetGenreListQuery();
@@ -29,6 +36,7 @@ public class GenreController : BaseController
     }
 
     [HttpGet("{id:guid}")]
+    [Authorize]
     public async Task<ActionResult<GenreDetailsVm>> Get(Guid id)
     {
         var query = new GetGenreDetailsQuery(id);
@@ -38,6 +46,7 @@ public class GenreController : BaseController
     }
 
     [HttpPost]
+    [Authorize(Roles = AppData.SystemAdministratorRoleName)]
     public async Task<ActionResult<Guid>> Create([FromBody] CreateGenreDto createGenreDto)
     {
         var command = _mapper.Map<CreateGenreCommand>(createGenreDto);
@@ -47,6 +56,7 @@ public class GenreController : BaseController
     }
 
     [HttpPut]
+    [Authorize(Roles = AppData.SystemAdministratorRoleName)]
     public async Task<ActionResult> Update([FromBody] UpdateGenreDto updateGenreDto)
     {
         var command = _mapper.Map<UpdateGenreCommand>(updateGenreDto);
@@ -56,6 +66,7 @@ public class GenreController : BaseController
     }
 
     [HttpDelete("{id:guid}")]
+    [Authorize(Roles = AppData.SystemAdministratorRoleName)]
     public async Task<ActionResult> Delete(Guid id)
     {
         var command = new DeleteGenreCommand(id);

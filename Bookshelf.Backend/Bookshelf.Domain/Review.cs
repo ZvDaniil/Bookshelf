@@ -1,9 +1,11 @@
-﻿namespace Bookshelf.Domain;
+﻿using Bookshelf.Domain.Interfaces;
+
+namespace Bookshelf.Domain;
 
 /// <summary>
 /// Модель отзыва на книгу.
 /// </summary>
-public class Review
+public class Review : IPublished
 {
     /// <summary>
     /// Идентификатор отзыва.
@@ -28,15 +30,13 @@ public class Review
     /// <summary>
     /// Книга.
     /// </summary>
-    public Book Book { get; set; }
+    public virtual Book Book { get; set; } = null!;
 
     /// <summary>
-    /// Идентификатор пользователя.
+    /// Имя пользователя.
     /// </summary>
-    public Guid UserId { get; set; }
+    public string UserName { get; set; } = string.Empty;
 
-    /// <summary>
-    /// Пользователь.
-    /// </summary>
-    public User User { get; set; }
+    ///<inheritdoc/>
+    public bool Visible { get; set; }
 }

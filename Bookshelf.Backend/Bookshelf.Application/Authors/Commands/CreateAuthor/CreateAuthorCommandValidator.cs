@@ -8,12 +8,10 @@ internal class CreateAuthorCommandValidator : AbstractValidator<CreateAuthorComm
     {
         RuleFor(createAuthorCommand => createAuthorCommand.FirstName)
             .NotEmpty()
-            .MinimumLength(3)
-            .MaximumLength(50);
+            .Length(3, 50);
 
         RuleFor(createAuthorCommand => createAuthorCommand.LastName)
             .NotEmpty()
-            .MinimumLength(3)
-            .MaximumLength(50);
+            .Length(3, 50);
     }
 }

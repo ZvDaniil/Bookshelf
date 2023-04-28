@@ -17,7 +17,8 @@ internal sealed class CreateGenreCommandHandler : IRequestHandler<CreateGenreCom
         {
             Id = Guid.NewGuid(),
             Name = request.Name,
-            Books = new List<Book>()
+            Books = new List<Book>(),
+            Visible = request.Visible
         };
 
         await _dbContext.Genres.AddAsync(genre, cancellationToken);

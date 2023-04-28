@@ -28,6 +28,12 @@ public class BookDetailsVm : IMapWith<Book>
 
     public List<GenreLookupDto> Genres { get; set; } = new();
 
+    public double AverageRating { get; set; }
+
+    public int ReviewsCount { get; set; }
+
+    public bool Visible { get; set; }
+
     public void Mapping(Profile profile) =>
         profile.CreateMap<Book, BookDetailsVm>()
             .ForMember(bookVm => bookVm.Id, opt => opt.MapFrom(book => book.Id))
@@ -39,5 +45,16 @@ public class BookDetailsVm : IMapWith<Book>
             .ForMember(bookVm => bookVm.Price, opt => opt.MapFrom(book => book.Price))
             .ForMember(bookVm => bookVm.ISBN, opt => opt.MapFrom(book => book.ISBN))
             .ForMember(bookVm => bookVm.Author, opt => opt.MapFrom(book => book.Author))
-            .ForMember(bookVm => bookVm.Genres, opt => opt.MapFrom(book => book.Genres));
+            .ForMember(bookVm => bookVm.Genres, opt => opt.MapFrom(book => book.Genres))
+            .ForMember(bookVm => bookVm.Visible, opt => opt.MapFrom(book => book.Visible))
+
+            .ForMember(bookVm => bookVm.ReviewsCount,
+                opt => opt.MapFrom(book => book.Reviews != null
+                ? book.Reviews.Count
+                : 0))
+
+            .ForMember(bookVm => bookVm.AverageRating,
+                opt => opt.MapFrom(book => book.Reviews != null && book.Reviews.Any()
+                ? book.Reviews.Average(review => review.Rating)
+                : 0));
 }

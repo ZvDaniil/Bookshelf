@@ -25,5 +25,7 @@ internal class AuthorConfiguration : IEntityTypeConfiguration<Author>
             .WithOne(b => b.Author)
             .HasForeignKey(b => b.AuthorId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasQueryFilter(author => author.Visible);
     }
 }

@@ -20,5 +20,7 @@ public class CreateBookCommand : IRequest<Guid>
 
     public Guid AuthorId { get; set; }
 
-    public ICollection<Guid> GenreIds { get; set; } = new List<Guid>();
+    public ICollection<Guid> GenreIds { get; set; } = null!;
+
+    public bool Visible { get; set; }
 }

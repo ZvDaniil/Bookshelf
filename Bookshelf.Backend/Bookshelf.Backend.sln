@@ -9,13 +9,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{12019545-C495-4BE1-9BAC-445C58FF7965}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookshelf.Domain", "Bookshelf.Domain\Bookshelf.Domain.csproj", "{84238EEE-EBF4-431F-9749-9BB3540E44B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookshelf.Domain", "Bookshelf.Domain\Bookshelf.Domain.csproj", "{84238EEE-EBF4-431F-9749-9BB3540E44B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookshelf.Application", "Bookshelf.Application\Bookshelf.Application.csproj", "{37870578-78D3-435F-B14A-F58CB04E801C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookshelf.Application", "Bookshelf.Application\Bookshelf.Application.csproj", "{37870578-78D3-435F-B14A-F58CB04E801C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookshelf.Persistence", "Bookshelf.Persistence\Bookshelf.Persistence.csproj", "{509F4E9A-B233-4A33-B9DB-C4637D394DBD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookshelf.Persistence", "Bookshelf.Persistence\Bookshelf.Persistence.csproj", "{509F4E9A-B233-4A33-B9DB-C4637D394DBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookshelf.Api", "Bookshelf.Api\Bookshelf.Api.csproj", "{272F22FD-D5BC-4213-B70D-75A1CDB5FE6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookshelf.Api", "Bookshelf.Api\Bookshelf.Api.csproj", "{272F22FD-D5BC-4213-B70D-75A1CDB5FE6F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E3676D09-6DBD-488F-A6EA-BBDAB160250A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,8 +7,10 @@ namespace Bookshelf.Api.Models;
 public class CreateGenreDto : IMapWith<CreateGenreCommand>
 {
     public string Name { get; set; } = string.Empty;
+    public bool Visible { get; set; }
 
     public void Mapping(Profile profile) =>
         profile.CreateMap<CreateGenreDto, CreateGenreCommand>()
-            .ForMember(command => command.Name, opt => opt.MapFrom(dto => dto.Name));
+            .ForMember(command => command.Name, opt => opt.MapFrom(dto => dto.Name))
+            .ForMember(command => command.Visible, opt => opt.MapFrom(dto => dto.Visible));
 }

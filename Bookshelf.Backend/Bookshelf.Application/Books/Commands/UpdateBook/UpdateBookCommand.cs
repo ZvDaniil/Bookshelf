@@ -10,6 +10,8 @@ public class UpdateBookCommand : IRequest
 
     public string Description { get; set; } = string.Empty;
 
+    public Guid AuthorId { get; set; }
+
     public int AgeRestriction { get; set; }
 
     public DateTime DatePublished { get; set; }
@@ -19,4 +21,6 @@ public class UpdateBookCommand : IRequest
     public decimal Price { get; set; }
 
     public string ISBN { get; set; } = string.Empty;
+
+    public bool Visible { get; set; }
 }

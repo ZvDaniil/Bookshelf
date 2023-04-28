@@ -1,5 +1,13 @@
 using System.Reflection;
 
+using Serilog;
+using Serilog.Events;
+using Swashbuckle.AspNetCore.SwaggerGen;
+
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 using Bookshelf.Application.Interfaces;
 using Bookshelf.Application.Common.Mappings;
 using Bookshelf.Application.Configurations;
@@ -7,10 +15,9 @@ using Bookshelf.Application.Configurations;
 using Bookshelf.Persistence;
 using Bookshelf.Persistence.Configurations;
 
-using Bookshelf.Api.Middleware;
+using Bookshelf.Api;
 using Bookshelf.Api.Services;
-using Serilog;
-using Serilog.Events;
+using Bookshelf.Api.Middleware;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -31,25 +38,21 @@ try
 {
     var context = serviceProvider.GetRequiredService<BookshelfDbContext>();
     DbInitializer.Initialize(context);
+
+    var apiVersionDescriptionProvider = serviceProvider.GetRequiredService<IApiVersionDescriptionProvider>();
+    Configure(app, apiVersionDescriptionProvider);
+
+    app.Run();
 }
 catch (Exception exception)
 {
     Log.Fatal(exception, "An error occured while app initialization");
 }
-
-app.UseSwagger();
-app.UseSwaggerUI();
-app.UseCustomExceptionHandler();
-app.UseRouting();
-app.UseHttpsRedirection();
-app.UseCors("AllowAll");
-
-app.UseEndpoints(endpoints =>
+finally
 {
-    endpoints.MapControllers();
-});
-
-app.Run();
+    Thread.Sleep(5000);
+    Log.CloseAndFlush();
+}
 
 static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
 {
@@ -61,6 +64,12 @@ static void ConfigureServices(IServiceCollection services, IConfiguration config
 
     services.AddApplication();
     services.AddPersistence(configuration);
+
+    services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
+    services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+
+    services.AddSwaggerGen();
+    services.AddApiVersioning(options => options.AssumeDefaultVersionWhenUnspecified = true);
 
     services.AddEndpointsApiExplorer();
     services.AddSwaggerGen();
@@ -78,5 +87,47 @@ static void ConfigureServices(IServiceCollection services, IConfiguration config
             policy.AllowAnyMethod();
             policy.AllowAnyOrigin();
         });
+    });
+
+    services.AddAuthentication(config =>
+    {
+        config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+        .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+        {
+            options.Authority = "https://localhost:7111/";
+            options.Audience = "BookshelfWebAPI";
+            options.RequireHttpsMetadata = false;
+        });
+}
+
+static void Configure(WebApplication app, IApiVersionDescriptionProvider apiVersionDescriptionProvider)
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(config =>
+    {
+        foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
+        {
+            config.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+            config.RoutePrefix = string.Empty;
+            config.OAuthClientId("api-swagger");
+            config.OAuthScopes("profile", "openid", "BookshelfWebAPI", "roles");
+            config.OAuthUsePkce();
+        }
+    });
+
+    app.UseCustomExceptionHandler();
+    app.UseRouting();
+    app.UseHttpsRedirection();
+    app.UseCors("AllowAll");
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    app.UseApiVersioning();
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapControllers();
     });
 }

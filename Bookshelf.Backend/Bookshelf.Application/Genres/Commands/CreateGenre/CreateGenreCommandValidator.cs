@@ -6,8 +6,6 @@ internal class CreateGenreCommandValidator : AbstractValidator<CreateGenreComman
 {
     public CreateGenreCommandValidator()
     {
-        RuleFor(createGenreCommand => createGenreCommand.Name)
-            .MinimumLength(4)
-            .MaximumLength(50);
+        RuleFor(createGenreCommand => createGenreCommand.Name).Length(4, 50);
     }
 }

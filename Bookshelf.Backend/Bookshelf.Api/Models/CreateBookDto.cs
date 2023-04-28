@@ -15,6 +15,7 @@ public class CreateBookDto : IMapWith<CreateBookCommand>
     public string ISBN { get; set; } = string.Empty;
     public Guid AuthorId { get; set; }
     public List<Guid> GenreIds { get; set; } = new();
+    public bool Visible { get; set; }
 
     public void Mapping(Profile profile) =>
         profile.CreateMap<CreateBookDto, CreateBookCommand>()
@@ -25,5 +26,6 @@ public class CreateBookDto : IMapWith<CreateBookCommand>
             .ForMember(command => command.Pages, opt => opt.MapFrom(dto => dto.Pages))
             .ForMember(command => command.ISBN, opt => opt.MapFrom(dto => dto.ISBN))
             .ForMember(command => command.AuthorId, opt => opt.MapFrom(dto => dto.AuthorId))
-            .ForMember(command => command.GenreIds, opt => opt.MapFrom(dto => dto.GenreIds));
+            .ForMember(command => command.GenreIds, opt => opt.MapFrom(dto => dto.GenreIds))
+            .ForMember(command => command.Visible, opt => opt.MapFrom(dto => dto.Visible));
 }

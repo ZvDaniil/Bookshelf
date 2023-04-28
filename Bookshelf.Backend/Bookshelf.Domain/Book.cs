@@ -1,14 +1,17 @@
-﻿namespace Bookshelf.Domain;
+﻿using Bookshelf.Domain.Interfaces;
+
+namespace Bookshelf.Domain;
 
 /// <summary>
 /// Модель книги.
 /// </summary>
-public class Book
+public class Book : IPublished
 {
     /// <summary>
     /// Идентификатор книги.
     /// </summary>
     public Guid Id { get; set; }
+
     /// <summary>
     /// Название книги.
     /// </summary>
@@ -52,15 +55,18 @@ public class Book
     /// <summary>
     /// Автор книги.
     /// </summary>
-    public Author Author { get; set; }
+    public virtual Author Author { get; set; } = null!;
 
     /// <summary>
     /// Коллекция жанров, к которым относится книга.
     /// </summary>
-    public ICollection<Genre> Genres { get; set; }
+    public virtual ICollection<Genre>? Genres { get; set; }
 
     /// <summary>
     /// Коллекция отзывов на книгу.
     /// </summary>
-    public ICollection<Review> Reviews { get; set; }
+    public virtual ICollection<Review>? Reviews { get; set; }
+
+    ///<inheritdoc/>
+    public bool Visible { get; set; }
 }

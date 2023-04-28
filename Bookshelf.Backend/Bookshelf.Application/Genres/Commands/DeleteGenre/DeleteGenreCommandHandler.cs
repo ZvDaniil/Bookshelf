@@ -2,6 +2,7 @@
 using Bookshelf.Domain;
 using Bookshelf.Application.Interfaces;
 using Bookshelf.Application.Common.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bookshelf.Application.Genres.Commands.DeleteGenre;
 
@@ -14,7 +15,10 @@ internal sealed class DeleteGenreCommandHandler : IRequestHandler<DeleteGenreCom
 
     public async Task Handle(DeleteGenreCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _dbContext.Genres.FindAsync(new object[] { request.Id }, cancellationToken);
+        var entity = await _dbContext.Genres
+            .IgnoreQueryFilters()
+            .FirstOrDefaultAsync(genre => genre.Id == request.Id, cancellationToken);
+
         if (entity is null)
         {
             throw new NotFoundException(nameof(Genre), request.Id);

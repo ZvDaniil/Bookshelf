@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bookshelf.Api.Controllers.Base;
@@ -12,8 +11,4 @@ public abstract class BaseController : ControllerBase
 
     protected IMediator Mediator =>
         _mediator ??= HttpContext.RequestServices.GetRequiredService<IMediator>();
-
-    internal Guid UserId => User.Identity.IsAuthenticated
-        ? Guid.Empty
-        : Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 }

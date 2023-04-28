@@ -47,5 +47,10 @@ internal class BookConfiguration : IEntityTypeConfiguration<Book>
         builder.HasMany(book => book.Reviews)
             .WithOne(review => review.Book)
             .HasForeignKey(r => r.BookId);
+
+        builder.HasQueryFilter(book => book.Visible);
+
+        builder.Navigation(b => b.Author).AutoInclude();
+        builder.Navigation(b => b.Genres).AutoInclude();
     }
 }

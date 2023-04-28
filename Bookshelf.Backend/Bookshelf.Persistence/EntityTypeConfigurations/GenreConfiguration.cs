@@ -19,5 +19,7 @@ internal class GenreConfiguration : IEntityTypeConfiguration<Genre>
 
         builder.HasMany(g => g.Books)
             .WithMany(b => b.Genres);
+
+        builder.HasQueryFilter(genre => genre.Visible);
     }
 }

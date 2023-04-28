@@ -17,6 +17,9 @@ internal class UpdateBookCommandValidator : AbstractValidator<UpdateBookCommand>
             .NotEmpty()
             .MaximumLength(500);
 
+        RuleFor(updateBookCommand => updateBookCommand.AuthorId)
+            .NotEqual(Guid.Empty);
+
         RuleFor(updateBookCommand => updateBookCommand.AgeRestriction)
             .InclusiveBetween(0, 18);
 

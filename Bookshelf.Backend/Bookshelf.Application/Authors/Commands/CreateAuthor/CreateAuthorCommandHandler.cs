@@ -19,6 +19,7 @@ internal sealed class CreateAuthorCommandHandler : IRequestHandler<CreateAuthorC
             FirstName = request.FirstName,
             LastName = request.LastName,
             Books = new List<Book>(),
+            Visible = request.Visible
         };
 
         await _dbContext.Authors.AddAsync(author, cancellationToken);

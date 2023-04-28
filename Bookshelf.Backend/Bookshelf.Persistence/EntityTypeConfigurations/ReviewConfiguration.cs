@@ -20,10 +20,6 @@ internal class ReviewConfiguration : IEntityTypeConfiguration<Review>
             .HasForeignKey(review => review.BookId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder
-            .HasOne(review => review.User)
-            .WithMany(user => user.Reviews)
-            .HasForeignKey(review => review.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
+        builder.HasQueryFilter(review => review.Visible);
     }
 }

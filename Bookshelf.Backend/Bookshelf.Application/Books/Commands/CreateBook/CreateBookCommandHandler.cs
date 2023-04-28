@@ -42,6 +42,7 @@ internal sealed class CreateBookCommandHandler : IRequestHandler<CreateBookComma
             Author = author,
             Genres = genres,
             Reviews = new List<Review>(),
+            Visible = request.Visible
         };
 
         await _dbContext.Books.AddAsync(book, cancellationToken);

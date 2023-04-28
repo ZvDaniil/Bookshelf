@@ -1,13 +1,18 @@
 ﻿using AutoMapper;
+
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+
 using Bookshelf.Api.Models;
 using Bookshelf.Api.Controllers.Base;
+
 using Bookshelf.Application.Authors.Models;
 using Bookshelf.Application.Authors.Queries.GetAuthorList;
 using Bookshelf.Application.Authors.Queries.GetAuthorDetails;
 using Bookshelf.Application.Authors.Commands.CreateAuthor;
 using Bookshelf.Application.Authors.Commands.UpdateAuthor;
 using Bookshelf.Application.Authors.Commands.DeleteAuthor;
+using Bookshelf.Domain.Base;
 
 namespace Bookshelf.Api.Controllers;
 
@@ -20,6 +25,7 @@ public class AuthorController : BaseController
     public AuthorController(IMapper mapper) => _mapper = mapper;
 
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<AuthorListVm>> GetAll()
     {
         var query = new GetAuthorListQuery();
@@ -29,6 +35,7 @@ public class AuthorController : BaseController
     }
 
     [HttpGet("{id:guid}")]
+    [Authorize]
     public async Task<ActionResult<AuthorDetailsVm>> Get(Guid id)
     {
         var query = new GetAuthorDetailsQuery(id);
@@ -38,6 +45,7 @@ public class AuthorController : BaseController
     }
 
     [HttpPost]
+    [Authorize(Roles = AppData.SystemAdministratorRoleName)]
     public async Task<ActionResult<Guid>> Create([FromBody] CreateAuthorDto createAuthorDto)
     {
         var command = _mapper.Map<CreateAuthorCommand>(createAuthorDto);
@@ -47,6 +55,7 @@ public class AuthorController : BaseController
     }
 
     [HttpPut]
+    [Authorize(Roles = AppData.SystemAdministratorRoleName)]
     public async Task<ActionResult> Update([FromBody] UpdateAuthorDto updateAuthorDto)
     {
         var command = _mapper.Map<UpdateAuthorCommand>(updateAuthorDto);
@@ -56,6 +65,7 @@ public class AuthorController : BaseController
     }
 
     [HttpDelete("{id:guid}")]
+    [Authorize(Roles = AppData.SystemAdministratorRoleName)]
     public async Task<ActionResult> Delete(Guid id)
     {
         var command = new DeleteAuthorCommand(id);

@@ -1,9 +1,11 @@
-﻿namespace Bookshelf.Domain;
+﻿using Bookshelf.Domain.Interfaces;
+
+namespace Bookshelf.Domain;
 
 /// <summary>
 /// Модель жанра книги.
 /// </summary>
-public class Genre
+public class Genre : IPublished
 {
     /// <summary>
     /// Идентификатор жанра.
@@ -18,5 +20,8 @@ public class Genre
     /// <summary>
     /// Список книг данного жанра.
     /// </summary>
-    public ICollection<Book> Books { get; set; }
+    public virtual ICollection<Book>? Books { get; set; }
+
+    ///<inheritdoc/>
+    public bool Visible { get; set; }
 }

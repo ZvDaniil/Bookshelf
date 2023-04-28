@@ -33,5 +33,8 @@ internal class CreateBookCommandValidator : AbstractValidator<CreateBookCommand>
         RuleFor(createBookCommand => createBookCommand.ISBN)
             .NotEmpty()
             .MaximumLength(20);
+
+        RuleFor(createBookCommand => createBookCommand.GenreIds)
+            .NotEmpty();
     }
 }

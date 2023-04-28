@@ -1,0 +1,30 @@
+﻿@model RegisterViewModel
+<div class="row">
+
+    <div class="col-md-4 offset-4">
+
+        <form method="post">
+
+            <input type="hidden" asp-for="ReturnUrl" />
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="mb-3 row">
+                <input class="form-control" asp-for="Username" placeholder="Username">
+            </div>
+
+            <div class="mb-3 row">
+                <input class="form-control" type="password" asp-for="Password" placeholder="Password" />
+            </div>
+
+            <div class="mb-3 row">
+                <input class="form-control" type="password" asp-for="ConfirmPassword" placeholder="ConfirmPassword" />
+            </div>
+
+            <div class="text-center">
+                <button class="btn btn-primary" type="submit">Создать</button>
+            </div>
+
+        </form>
+    </div>
+</div>

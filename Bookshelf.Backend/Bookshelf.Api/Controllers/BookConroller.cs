@@ -1,16 +1,24 @@
 ﻿using AutoMapper;
+
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+
 using Bookshelf.Api.Models;
 using Bookshelf.Api.Controllers.Base;
+
 using Bookshelf.Application.Books.Models;
 using Bookshelf.Application.Books.Queries.GetBookList;
 using Bookshelf.Application.Books.Queries.GetBookDetails;
 using Bookshelf.Application.Books.Commands.CreateBook;
 using Bookshelf.Application.Books.Commands.UpdateBook;
 using Bookshelf.Application.Books.Commands.DeleteBook;
+using Bookshelf.Domain.Base;
+using Bookshelf.Application.Books.Commands.DeleteBookGenre;
+using Bookshelf.Application.Books.Commands.AddBookGenre;
 
 namespace Bookshelf.Api.Controllers;
 
+//[ApiVersion("1.0")]
 [Produces("application/json")]
 [Route("api/[controller]")]
 public class BookController : BaseController
@@ -20,30 +28,27 @@ public class BookController : BaseController
     public BookController(IMapper mapper) => _mapper = mapper;
 
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<BookListVm>> GetAll()
     {
-        try
-        {
-            var vm = await Mediator.Send(new GetBookListQuery());
-            return Ok(vm);
+        var query = new GetBookListQuery();
+        var vm = await Mediator.Send(query);
 
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-            return BadRequest(ex.Message);
-        }
+        return Ok(vm);
     }
 
     [HttpGet("{id:guid}")]
+    [Authorize]
     public async Task<ActionResult<BookDetailsVm>> Get(Guid id)
     {
-        var vm = await Mediator.Send(new GetBookDetailsQuery(id));
+        var query = new GetBookDetailsQuery(id);
+        var vm = await Mediator.Send(query);
 
         return Ok(vm);
     }
 
     [HttpPost]
+    [Authorize(Roles = AppData.SystemAdministratorRoleName)]
     public async Task<ActionResult<Guid>> Create([FromBody] CreateBookDto createBookDto)
     {
         var command = _mapper.Map<CreateBookCommand>(createBookDto);
@@ -53,6 +58,7 @@ public class BookController : BaseController
     }
 
     [HttpPut]
+    [Authorize(Roles = AppData.SystemAdministratorRoleName)]
     public async Task<ActionResult> Update(UpdateBookDto updateBookDto)
     {
         var command = _mapper.Map<UpdateBookCommand>(updateBookDto);
@@ -62,6 +68,7 @@ public class BookController : BaseController
     }
 
     [HttpDelete("{id:guid}")]
+    [Authorize(Roles = AppData.SystemAdministratorRoleName)]
     public async Task<ActionResult> Delete(Guid id)
     {
         var command = new DeleteBookCommand(id);
@@ -69,40 +76,25 @@ public class BookController : BaseController
 
         return NoContent();
     }
+
+    [HttpDelete("{bookId:guid}/genres/{genreId:guid}")]
+    [Authorize(Roles = AppData.SystemAdministratorRoleName)]
+    public async Task<ActionResult> DeleteBookGenre(Guid bookId, Guid genreId)
+    {
+        var command = new DeleteBookGenreCommand(bookId, genreId);
+        await Mediator.Send(command);
+
+        return NoContent();
+    }
+
+    [HttpPost("{bookId:guid}/genres")]
+    [Authorize(Roles = AppData.SystemAdministratorRoleName)]
+    public async Task<ActionResult> AddBookGenre(Guid bookId, [FromBody] Guid GenreId)
+    {
+        var command = new AddBookGenreCommand(bookId, GenreId);
+        await Mediator.Send(command);
+
+        return NoContent();
+    }
 }
 
-//Получение списка отзывов для книги: GET /api/books/{bookId}/ reviews
-//Добавление нового отзыва для книги: POST / api / books /{ bookId}/ reviews
-//Получение информации о конкретном отзыве для книги: GET / api / books /{ bookId}/ reviews /{ reviewId}
-//Обновление информации о отзыве для книги: PUT / api / books /{ bookId}/ reviews /{ reviewId}
-//Удаление отзыва для книги: DELETE / api / books /{ bookId}/ reviews /{ reviewId}
-
-//GET /books
-
-//POST /books
-
-//GET /books/{bookId}
-
-//PUT / books /{ bookId}
-
-//DELETE / books /{ bookId}
-
-
-//GET /genres
-
-//POST /genres
-
-//GET /genres/{genreId}
-
-//PUT / genres /{ genreId}
-
-//DELETE / genres /{ genreId}
-
-
-//PUT /books/{bookId}/ genres
-
-//DELETE / books /{ bookId}/ genres
-
-//PUT / genres /{ genreId}/ books
-
-//DELETE / genres /{ genreId}/ books

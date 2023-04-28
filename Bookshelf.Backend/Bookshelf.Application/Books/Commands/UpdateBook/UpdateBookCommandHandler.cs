@@ -2,6 +2,7 @@
 using Bookshelf.Domain;
 using Bookshelf.Application.Interfaces;
 using Bookshelf.Application.Common.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bookshelf.Application.Books.Commands.UpdateBook;
 
@@ -14,17 +15,31 @@ internal sealed class UpdateBookCommandHandler : IRequestHandler<UpdateBookComma
 
     public async Task Handle(UpdateBookCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _dbContext.Books.FindAsync(new object[] { request.Id }, cancellationToken);
-        if (entity is null)
+        var book = await _dbContext.Books
+            .IgnoreQueryFilters()
+            .FirstOrDefaultAsync(book => book.Id == request.Id, cancellationToken);
+
+        if (book is null)
         {
             throw new NotFoundException(nameof(Book), request.Id);
         }
 
-        entity.Title = request.Title;
-        entity.Description = request.Description;
-        entity.Pages = request.Pages;
-        entity.Price = request.Price;
-        entity.ISBN = request.ISBN;
+        var author = await _dbContext.Authors
+            .IgnoreQueryFilters()
+            .FirstOrDefaultAsync(author => author.Id == request.AuthorId, cancellationToken);
+
+        if (author is null)
+        {
+            throw new NotFoundException(nameof(Author), request.AuthorId);
+        }
+
+        book.Author = author;
+        book.Title = request.Title;
+        book.Description = request.Description;
+        book.Pages = request.Pages;
+        book.Price = request.Price;
+        book.ISBN = request.ISBN;
+        book.Visible = request.Visible;
 
         await _dbContext.SaveChangesAsync(cancellationToken);
     }

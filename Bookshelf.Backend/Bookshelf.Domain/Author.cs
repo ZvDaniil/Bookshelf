@@ -1,9 +1,11 @@
-﻿namespace Bookshelf.Domain;
+﻿using Bookshelf.Domain.Interfaces;
+
+namespace Bookshelf.Domain;
 
 /// <summary>
 /// Модель автора книги.
 /// </summary>
-public class Author
+public class Author : IPublished
 {
     /// <summary>
     /// Уникальный идентификатор автора.
@@ -23,5 +25,8 @@ public class Author
     /// <summary>
     /// Список книг, написанных автором.
     /// </summary>
-    public ICollection<Book> Books { get; set; }
+    public virtual ICollection<Book>? Books { get; set; }
+
+    ///<inheritdoc/>
+    public bool Visible { get; set; }
 }
