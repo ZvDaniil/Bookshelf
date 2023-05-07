@@ -79,7 +79,7 @@
 - [x] `Visible` нельзя включить, если все жанры книги скрыты.
 - [x] При получении всех книг, необходимо использовать разбиение на страницы (paging).
 - [x] API должна содержать методы CRUD для управления сущностью `Book`:
-  - [x] `GetPaged(int pageIndex, int pageSize)`
+  - [ ] `GetPaged(int pageIndex, int pageSize)`
   - [x] `GetAll()` (не рекомендуется)
   - [x] `Get(Guid id)`
   - [x] `Create(CreateBookDto createBookDto)`
