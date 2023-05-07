@@ -2,7 +2,7 @@
 using Bookshelf.Application.Common.Mappings;
 using Bookshelf.Application.Books.Commands.CreateBook;
 
-namespace Bookshelf.Api.Models;
+namespace Bookshelf.Api.Models.Book;
 
 public class CreateBookDto : IMapWith<CreateBookCommand>
 {

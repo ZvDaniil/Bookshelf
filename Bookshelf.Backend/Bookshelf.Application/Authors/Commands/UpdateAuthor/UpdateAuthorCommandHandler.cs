@@ -1,8 +1,8 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Bookshelf.Domain;
 using Bookshelf.Application.Interfaces;
 using Bookshelf.Application.Common.Exceptions;
-using Microsoft.EntityFrameworkCore;
 
 namespace Bookshelf.Application.Authors.Commands.UpdateAuthor;
 
@@ -26,7 +26,6 @@ internal sealed class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorC
 
         entity.FirstName = request.FirstName;
         entity.LastName = request.LastName;
-        entity.Visible = request.Visible;
 
         await _dbContext.SaveChangesAsync(cancellationToken);
     }

@@ -17,6 +17,7 @@ internal sealed class CreateGenreCommandHandler : IRequestHandler<CreateGenreCom
         {
             Id = Guid.NewGuid(),
             Name = request.Name,
+            Description = request.Description,
             Books = new List<Book>(),
             Visible = request.Visible
         };

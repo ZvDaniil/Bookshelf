@@ -2,4 +2,4 @@
 
 namespace Bookshelf.Application.Genres.Commands.UpdateGenre;
 
-public record UpdateGenreCommand(Guid Id, string Name, bool Visible) : IRequest;
+public record UpdateGenreCommand(Guid Id, string Name, string Description, bool Visible) : IRequest;

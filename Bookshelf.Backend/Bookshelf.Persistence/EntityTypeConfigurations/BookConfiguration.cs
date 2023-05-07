@@ -14,11 +14,11 @@ internal class BookConfiguration : IEntityTypeConfiguration<Book>
             .IsUnique();
 
         builder.Property(book => book.Title)
-            .HasMaxLength(100)
+            .HasMaxLength(128)
             .IsRequired();
 
         builder.Property(book => book.Description)
-            .HasMaxLength(500)
+            .HasMaxLength(2048)
             .IsRequired();
 
         builder.Property(book => book.AgeRestriction)

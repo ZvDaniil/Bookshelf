@@ -31,6 +31,7 @@ namespace Bookshelf.Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 1024, nullable: false),
                     Visible = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -43,8 +44,8 @@ namespace Bookshelf.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Title = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false),
+                    Title = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 2048, nullable: false),
                     AgeRestriction = table.Column<int>(type: "INTEGER", nullable: false),
                     DatePublished = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Pages = table.Column<int>(type: "INTEGER", nullable: false),
@@ -94,8 +95,9 @@ namespace Bookshelf.Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Rating = table.Column<int>(type: "INTEGER", nullable: false),
-                    Comment = table.Column<string>(type: "TEXT", nullable: false),
+                    Content = table.Column<string>(type: "TEXT", maxLength: 2048, nullable: false),
                     BookId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    UserId = table.Column<Guid>(type: "TEXT", nullable: false),
                     UserName = table.Column<string>(type: "TEXT", nullable: false),
                     Visible = table.Column<bool>(type: "INTEGER", nullable: false)
                 },

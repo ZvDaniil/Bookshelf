@@ -39,7 +39,6 @@ internal sealed class UpdateBookCommandHandler : IRequestHandler<UpdateBookComma
         book.Pages = request.Pages;
         book.Price = request.Price;
         book.ISBN = request.ISBN;
-        book.Visible = request.Visible;
 
         await _dbContext.SaveChangesAsync(cancellationToken);
     }

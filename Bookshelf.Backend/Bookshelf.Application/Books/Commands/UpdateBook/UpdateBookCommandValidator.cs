@@ -2,7 +2,7 @@
 
 namespace Bookshelf.Application.Books.Commands.UpdateBook;
 
-internal class UpdateBookCommandValidator : AbstractValidator<UpdateBookCommand>
+public class UpdateBookCommandValidator : AbstractValidator<UpdateBookCommand>
 {
     public UpdateBookCommandValidator()
     {

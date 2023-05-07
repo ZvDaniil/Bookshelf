@@ -2,5 +2,5 @@
 
 public class AuthorListVm
 {
-    public IList<AuthorLookupDto> Authors { get; set; }
+    public IList<AuthorLookupDto> Authors { get; set; } = default!;
 }

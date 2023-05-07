@@ -18,6 +18,11 @@ public class Genre : IPublished
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
+    /// Описание жанра.
+    /// </summary>
+    public string Description { get; set; } = string.Empty;
+
+    /// <summary>
     /// Список книг данного жанра.
     /// </summary>
     public virtual ICollection<Book>? Books { get; set; }

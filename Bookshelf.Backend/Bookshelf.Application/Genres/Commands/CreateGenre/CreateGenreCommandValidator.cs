@@ -2,10 +2,11 @@
 
 namespace Bookshelf.Application.Genres.Commands.CreateGenre;
 
-internal class CreateGenreCommandValidator : AbstractValidator<CreateGenreCommand>
+public class CreateGenreCommandValidator : AbstractValidator<CreateGenreCommand>
 {
     public CreateGenreCommandValidator()
     {
-        RuleFor(createGenreCommand => createGenreCommand.Name).Length(4, 50);
+        RuleFor(createGenreCommand => createGenreCommand.Name).Length(5, 50);
+        RuleFor(createGenreCommand => createGenreCommand.Description).MaximumLength(1024);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Bookshelf.Application.Genres.Commands.DeleteGenre;
 
-internal class DeleteGenreCommandValidator : AbstractValidator<DeleteGenreCommand>
+public class DeleteGenreCommandValidator : AbstractValidator<DeleteGenreCommand>
 {
     public DeleteGenreCommandValidator()
     {

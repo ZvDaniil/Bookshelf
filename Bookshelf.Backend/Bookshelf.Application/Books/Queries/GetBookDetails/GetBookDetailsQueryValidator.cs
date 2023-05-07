@@ -2,7 +2,7 @@
 
 namespace Bookshelf.Application.Books.Queries.GetBookDetails;
 
-internal class GetBookDetailsQueryValidator : AbstractValidator<GetBookDetailsQuery>
+public class GetBookDetailsQueryValidator : AbstractValidator<GetBookDetailsQuery>
 {
     public GetBookDetailsQueryValidator()
     {

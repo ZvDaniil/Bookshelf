@@ -2,7 +2,7 @@
 
 namespace Bookshelf.Application.Genres.Commands.UpdateGenre;
 
-internal class UpdateGenreCommandValidator : AbstractValidator<UpdateGenreCommand>
+public class UpdateGenreCommandValidator : AbstractValidator<UpdateGenreCommand>
 {
     public UpdateGenreCommandValidator()
     {
@@ -10,7 +10,9 @@ internal class UpdateGenreCommandValidator : AbstractValidator<UpdateGenreComman
             .NotEqual(Guid.Empty);
 
         RuleFor(updateGenreCommand => updateGenreCommand.Name)
-            .MinimumLength(4)
-            .MaximumLength(50);
+            .Length(5, 50);
+
+        RuleFor(updateGenreCommand => updateGenreCommand.Description)
+            .MaximumLength(1024);
     }
 }

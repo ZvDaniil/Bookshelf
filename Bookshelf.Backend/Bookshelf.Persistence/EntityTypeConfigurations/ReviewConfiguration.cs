@@ -10,12 +10,13 @@ internal class ReviewConfiguration : IEntityTypeConfiguration<Review>
     {
         builder.HasKey(review => review.Id);
 
-        builder
-            .HasIndex(review => review.Id)
+        builder.HasIndex(review => review.Id)
             .IsUnique();
 
-        builder
-            .HasOne(review => review.Book)
+        builder.Property(review => review.Content)
+            .HasMaxLength(2048);
+
+        builder.HasOne(review => review.Book)
             .WithMany(book => book.Reviews)
             .HasForeignKey(review => review.BookId)
             .OnDelete(DeleteBehavior.Cascade);

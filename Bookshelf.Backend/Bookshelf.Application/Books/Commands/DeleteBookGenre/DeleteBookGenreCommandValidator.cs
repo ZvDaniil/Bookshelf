@@ -2,7 +2,7 @@
 
 namespace Bookshelf.Application.Books.Commands.DeleteBookGenre;
 
-internal class DeleteBookGenreCommandValidator : AbstractValidator<DeleteBookGenreCommand>
+public class DeleteBookGenreCommandValidator : AbstractValidator<DeleteBookGenreCommand>
 {
     public DeleteBookGenreCommandValidator()
     {

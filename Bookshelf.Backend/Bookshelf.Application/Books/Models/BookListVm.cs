@@ -2,5 +2,5 @@
 
 public class BookListVm
 {
-    public IList<BookLookupDto> Books { get; set; }
+    public IList<BookLookupDto> Books { get; set; } = default!;
 }

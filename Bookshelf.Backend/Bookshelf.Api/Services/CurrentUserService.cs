@@ -21,6 +21,8 @@ public class CurrentUserService : ICurrentUserService
         }
     }
 
+    public string UserName => User?.Identity?.Name ?? string.Empty;
+
     public bool CurrentUserIsInRole(string role) =>
         User is not null && User.IsInRole(role);
 }

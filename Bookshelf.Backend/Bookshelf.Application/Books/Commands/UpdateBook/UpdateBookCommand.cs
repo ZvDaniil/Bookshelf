@@ -21,6 +21,4 @@ public class UpdateBookCommand : IRequest
     public decimal Price { get; set; }
 
     public string ISBN { get; set; } = string.Empty;
-
-    public bool Visible { get; set; }
 }

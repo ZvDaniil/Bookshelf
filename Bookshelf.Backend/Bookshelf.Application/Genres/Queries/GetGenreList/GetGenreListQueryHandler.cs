@@ -20,12 +20,12 @@ internal class GetGenreListQueryHandler : IRequestHandler<GetGenreListQuery, Gen
 
     public async Task<GenreListVm> Handle(GetGenreListQuery request, CancellationToken cancellationToken)
     {
-        var genreQuery = await _dbContext.Genres
+        var genresQuery = await _dbContext.Genres
             .AsNoTracking()
             .IgnoreQueryFilters(_currentUserService.CurrentUserIsInRole(AppData.SystemAdministratorRoleName))
             .ProjectTo<GenreLookupDto>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
-        return new GenreListVm { Genres = genreQuery };
+        return new GenreListVm { Genres = genresQuery };
     }
 }

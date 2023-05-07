@@ -2,7 +2,7 @@
 
 namespace Bookshelf.Application.Books.Commands.CreateBook;
 
-internal class CreateBookCommandValidator : AbstractValidator<CreateBookCommand>
+public class CreateBookCommandValidator : AbstractValidator<CreateBookCommand>
 {
     public CreateBookCommandValidator()
     {
@@ -34,7 +34,7 @@ internal class CreateBookCommandValidator : AbstractValidator<CreateBookCommand>
             .NotEmpty()
             .MaximumLength(20);
 
-        RuleFor(createBookCommand => createBookCommand.GenreIds)
+        RuleFor(command => command.GenreIds)
             .NotEmpty();
     }
 }

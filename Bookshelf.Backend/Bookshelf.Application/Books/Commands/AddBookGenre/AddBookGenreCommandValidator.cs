@@ -2,7 +2,7 @@
 
 namespace Bookshelf.Application.Books.Commands.AddBookGenre;
 
-internal class AddBookGenreCommandValidator : AbstractValidator<AddBookGenreCommand>
+public class AddBookGenreCommandValidator : AbstractValidator<AddBookGenreCommand>
 {
     public AddBookGenreCommandValidator()
     {

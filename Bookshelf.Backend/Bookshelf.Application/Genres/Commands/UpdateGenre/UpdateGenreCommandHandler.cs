@@ -25,6 +25,7 @@ internal sealed class UpdateGenreCommandHandler : IRequestHandler<UpdateGenreCom
         }
 
         entity.Name = request.Name;
+        entity.Description = request.Description;
         entity.Visible = request.Visible;
 
         await _dbContext.SaveChangesAsync(cancellationToken);

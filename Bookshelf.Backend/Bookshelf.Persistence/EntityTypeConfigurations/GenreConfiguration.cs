@@ -17,6 +17,9 @@ internal class GenreConfiguration : IEntityTypeConfiguration<Genre>
             .IsRequired()
             .HasMaxLength(50);
 
+        builder.Property(g => g.Description)
+            .HasMaxLength(1024);
+
         builder.HasMany(g => g.Books)
             .WithMany(b => b.Genres);
 

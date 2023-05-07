@@ -18,9 +18,9 @@ public class Review : IPublished
     public int Rating { get; set; }
 
     /// <summary>
-    /// Комментарий.
+    /// Содержание.
     /// </summary>
-    public string Comment { get; set; } = string.Empty;
+    public string Content { get; set; } = string.Empty;
 
     /// <summary>
     /// Идентификатор книги.
@@ -31,6 +31,11 @@ public class Review : IPublished
     /// Книга.
     /// </summary>
     public virtual Book Book { get; set; } = null!;
+
+    /// <summary>
+    /// Идентификатор пользователя.
+    /// </summary>
+    public Guid UserId { get; set; }
 
     /// <summary>
     /// Имя пользователя.

@@ -18,7 +18,7 @@ internal sealed class GetBookListQueryHandler : IRequestHandler<GetBookListQuery
 
     public async Task<BookListVm> Handle(GetBookListQuery request, CancellationToken cancellationToken)
     {
-        var bookQuery = await _dbContext.Books
+        var booksQuery = await _dbContext.Books
            .Include(book => book.Reviews)
            .AsNoTracking()
            .IgnoreQueryFilters(_currentUserService.CurrentUserIsInRole(AppData.SystemAdministratorRoleName))
@@ -30,7 +30,8 @@ internal sealed class GetBookListQueryHandler : IRequestHandler<GetBookListQuery
                Author = new AuthorLookupDto
                {
                    Id = book.Author.Id,
-                   FullName = $"{book.Author.FirstName} {book.Author.LastName}"
+                   FullName = $"{book.Author.FirstName} {book.Author.LastName}",
+                   Visible = book.Author.Visible
                },
 
                ReviewsCount = book.Reviews != null
@@ -40,9 +41,11 @@ internal sealed class GetBookListQueryHandler : IRequestHandler<GetBookListQuery
                AverageRating = book.Reviews != null && book.Reviews.Any()
                         ? book.Reviews.Average(r => r.Rating)
                         : 0,
+
+               Visible = book.Visible
            })
            .ToListAsync(cancellationToken);
 
-        return new BookListVm { Books = bookQuery };
+        return new BookListVm { Books = booksQuery };
     }
 }

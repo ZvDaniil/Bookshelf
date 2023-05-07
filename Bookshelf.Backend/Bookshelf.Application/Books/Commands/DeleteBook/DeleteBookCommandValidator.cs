@@ -2,7 +2,7 @@
 
 namespace Bookshelf.Application.Books.Commands.DeleteBook;
 
-internal class DeleteBookCommandValidator : AbstractValidator<DeleteBookCommand>
+public class DeleteBookCommandValidator : AbstractValidator<DeleteBookCommand>
 {
     public DeleteBookCommandValidator()
     {

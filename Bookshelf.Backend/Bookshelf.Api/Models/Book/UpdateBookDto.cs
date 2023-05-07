@@ -2,7 +2,7 @@
 using Bookshelf.Application.Common.Mappings;
 using Bookshelf.Application.Books.Commands.UpdateBook;
 
-namespace Bookshelf.Api.Models;
+namespace Bookshelf.Api.Models.Book;
 
 public class UpdateBookDto : IMapWith<UpdateBookCommand>
 {
@@ -15,7 +15,6 @@ public class UpdateBookDto : IMapWith<UpdateBookCommand>
     public int Pages { get; set; }
     public decimal Price { get; set; }
     public string ISBN { get; set; } = string.Empty;
-    public bool Visible { get; set; }
 
     public void Mapping(Profile profile) =>
         profile.CreateMap<UpdateBookDto, UpdateBookCommand>()
@@ -27,6 +26,5 @@ public class UpdateBookDto : IMapWith<UpdateBookCommand>
             .ForMember(command => command.DatePublished, opt => opt.MapFrom(dto => dto.DatePublished))
             .ForMember(command => command.Pages, opt => opt.MapFrom(dto => dto.Pages))
             .ForMember(command => command.Price, opt => opt.MapFrom(dto => dto.Price))
-            .ForMember(command => command.ISBN, opt => opt.MapFrom(dto => dto.ISBN))
-            .ForMember(command => command.Visible, opt => opt.MapFrom(dto => dto.Visible));
+            .ForMember(command => command.ISBN, opt => opt.MapFrom(dto => dto.ISBN));
 }

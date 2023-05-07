@@ -2,5 +2,5 @@
 
 public class GenreListVm
 {
-    public IList<GenreLookupDto> Genres { get; set; }
+    public IList<GenreLookupDto> Genres { get; set; } = default!;
 }

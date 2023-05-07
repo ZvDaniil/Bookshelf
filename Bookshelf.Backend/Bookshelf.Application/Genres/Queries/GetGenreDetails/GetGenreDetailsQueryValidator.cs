@@ -2,7 +2,7 @@
 
 namespace Bookshelf.Application.Genres.Queries.GetGenreDetails;
 
-internal class GetGenreDetailsQueryValidator : AbstractValidator<GetGenreDetailsQuery>
+public class GetGenreDetailsQueryValidator : AbstractValidator<GetGenreDetailsQuery>
 {
     public GetGenreDetailsQueryValidator()
     {
